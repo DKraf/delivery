@@ -15,6 +15,10 @@ class CreatePrices extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
+            $table->integer('company_id');
+            $table->integer('kg');
+            $table->integer('km');
+            $table->integer('V');
             $table->timestamps();
         });
     }

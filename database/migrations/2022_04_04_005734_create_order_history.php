@@ -15,6 +15,8 @@ class CreateOrderHistory extends Migration
     {
         Schema::create('order_history', function (Blueprint $table) {
             $table->id();
+            $table->integer('status_id');
+            $table->integer('order_id');
             $table->timestamps();
         });
     }

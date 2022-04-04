@@ -15,6 +15,9 @@ class CreateDistance extends Migration
     {
         Schema::create('distance', function (Blueprint $table) {
             $table->id();
+            $table->integer('city_from');
+            $table->integer('city_to');
+            $table->integer('distance');
             $table->timestamps();
         });
     }
