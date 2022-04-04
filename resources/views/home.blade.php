@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Добро пожаловать в систему тестирования!</div>
+                <div class="card-header">Добро пожаловать Личный кабинет доставки товара</div>
 
                 <div class="card-body">
                     @if (session('status'))

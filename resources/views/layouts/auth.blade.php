@@ -6,7 +6,7 @@
     <!-- Токен CSRF -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
-    <title>Инженер - 2015</title>
+    <title>Fast - delivery &#x1F680;</title>
     <!-- Скрипты -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/popper.min.js') }}" defer></script>
@@ -25,7 +25,7 @@
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                Сайт для тестирования сотрудников - Инженер 2015
+                Сайт международной доставки товара &#x1F680;. От склада до пункта выдачи в вашем районе.
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -40,7 +40,7 @@
                     <!—Ссылки для аутентификации -->
                     @guest
                         <li><a class="nav-link" href="{{ route('login') }}">{{ __('Авторизация') }}</a></li>
-{{--                        <li><a class="nav-link" href="{{ route('register') }}">{{ __('Регистрация') }}</a></li>--}}
+                        <li><a class="nav-link" href="{{ route('register') }}">{{ __('Регистрация') }}</a></li>
                     @endguest
                 </ul>
             </div>

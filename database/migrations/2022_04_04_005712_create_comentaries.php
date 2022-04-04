@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTestThemeTable extends Migration
+class CreateComentaries extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateTestThemeTable extends Migration
      */
     public function up()
     {
-        Schema::create('test_theme', function (Blueprint $table) {
+        Schema::create('comentaries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ class CreateTestThemeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_theme');
+        Schema::dropIfExists('comentaries');
     }
 }

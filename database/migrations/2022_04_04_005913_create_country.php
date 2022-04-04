@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePositionTable extends Migration
+class CreateCountry extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePositionTable extends Migration
      */
     public function up()
     {
-        Schema::create('position', function (Blueprint $table) {
+        Schema::create('country', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreatePositionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pisition');
+        Schema::dropIfExists('country');
     }
 }
