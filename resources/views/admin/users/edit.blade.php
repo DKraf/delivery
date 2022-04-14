@@ -59,12 +59,6 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Должность:</strong>
-                {!! Form::select('position_id', $position, null, array('class' => 'form-control', 'placeholder' => 'Выберите должность')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
                 <strong>Роль:</strong>
                 {!! Form::select('roles', $roles, null, array('class' => 'form-control')) !!}
             </div>

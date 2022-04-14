@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
-class Test extends Model
+class Distance extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * @var string
      */
-    protected $table = "test";
+    protected $table = 'distance';
 
     /**
      * Атрибуты, которые можно назначать массово.
@@ -20,11 +22,9 @@ class Test extends Model
      * @var array
      */
     protected $fillable = [
-        'test_theme_id',
-        'question',
-        'answer_true',
-        'A',
-        'B',
-        'C'
+        'city_from',
+        'city_to',
+        'distance'
     ];
+
 }

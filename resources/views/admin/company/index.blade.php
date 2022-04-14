@@ -75,5 +75,4 @@
         <p class="text-center text-danger">Пока нет ни одной компании!</p>
     @endif
        {!! $data->links() !!}
-       <p class="text-center text"><small>	&#169 2021.  ТОО "Инженер-2015"</small></p>
    @endsection

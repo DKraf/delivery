@@ -6,8 +6,7 @@
     <!-- Токен CSRF -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
-    <title>Fast - delivery &#x1F680;</title>
-    <!-- Скрипты -->
+    <title>Fast Delivery</title>    <!-- Скрипты -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/popper.min.js') }}" defer></script>
     <script src="{{ asset('js/custom.js') }}" defer></script>

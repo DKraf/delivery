@@ -63,13 +63,13 @@ class CompanyController extends Controller
             'name' => 'required',
             'bin' => 'required|min:12|max:12',
             'legal_address' => 'required',
-            'tel_number' => 'required'
+            'phone' => 'required'
         ],
             [
                 'name.required' => 'Наименование должно быть заполнено',
                 'bin.required' => 'БИН должен быть заполнен',
                 'legal_address.required' => 'Адрес должен быть заполнен',
-                'tel_number.required' => 'Телефон должен быть заполнен',
+                'phone.required' => 'Телефон должен быть заполнен',
                 'bin.min' => 'БИН должен состоять не менее чем из 12 цифр',
                 'bin.max' => 'БИН должен состоять не более чем из 12 цифр'
             ]

@@ -6,7 +6,7 @@
     <!-- Токен CSRF -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
-    <title>Инженер - 2015</title>
+    <title>Fast Delivery</title>
     <!-- Скрипты -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/popper.min.js') }}" defer></script>
@@ -31,16 +31,14 @@
             </div>
             <div class="list-group list-group-flush">
                 @role('Admin')
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/admin/edit-index"><i class="bi bi-sliders"></i> Настройка страницы</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/edit"><i class="bi bi-person-circle"></i> Настройка профиля</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/users"><i class="bi bi-people"></i> Пользователи</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/roles"><i class="bi bi-person-check"></i> Роли</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/position"><i class="bi bi-mortarboard"></i> Должности</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/company"><i class="bi bi-building"></i> Компании</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-type"><i class="bi bi-clipboard-data"></i> Виды тестов</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-theme"><i class="bi bi-patch-question"></i> Тематики</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-assign"><i class="bi bi-journal-plus"></i> Назначенные Тесты</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/admin/testhistory"><i class="bi bi-calendar-event"></i> История Тестирования</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-type"><i class="bi bi-clipboard-data"></i>История заказов</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-theme"><i class="bi bi-patch-question"></i> В пути</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-assign"><i class="bi bi-journal-plus"></i> Ожидает томожни</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/admin/testhistory"><i class="bi bi-calendar-event"></i> Ожидает оплаты</a>
                 @endrole
                 @role('User')
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/edit"><i class="bi bi-person-circle"></i> Настройка профиля</a>
@@ -84,8 +82,11 @@
         <div class="container">
             @yield('content')
         </div>
+        <p class="text-center text-primary"><small>	&#169 2022.  Fast Delivery"</small></p>
     </main>
 </div>
     </div>
 </body>
+<footer>
+</footer>
 </html>

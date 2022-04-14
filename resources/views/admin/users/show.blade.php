@@ -43,14 +43,8 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Должность:</strong>
-                @if (!is_null($position)){{ $position->name}}@endif
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
                 <strong>Организация:</strong>
-                @if (!is_null($position)){{ $company->name }}@endif
+                @if (!is_null($company)){{ $company->name }}@endif
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -76,5 +70,4 @@
             </div>
         </div>
     </div>
-    <p class="text-center text-primary"><small>	&#169 2021.  ТОО "Инженер-2015"</small></p>
 @endsection

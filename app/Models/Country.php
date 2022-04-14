@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class Position extends Model
+class Country extends Model
 {
     use HasFactory, Notifiable, HasRoles;
 
-    protected $table = 'position';
+    /**
+     * @var string
+     */
+    protected $table = 'country';
+
     /**
      * Атрибуты, которые можно назначать массово.
      *
@@ -21,14 +25,20 @@ class Position extends Model
         'name'
     ];
 
+
     /**
      * @param $search
      * @return mixed
      */
     public function search($search)
     {
-        return Position::orderBy('id','DESC')
+        return Company::orderBy('id','DESC')
             ->where('name', 'LIKE', "%$search%")
             ->paginate(30);
+    }
+
+    public function cities()
+    {
+        return $this->hasMany('App\Models\City');
     }
 }

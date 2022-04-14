@@ -23,9 +23,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = User::orderBy('users.id','DESC')
-            ->leftJoin('position', 'users.position_id', '=', 'position.id')
             ->leftJoin('company', 'users.company_id', '=', 'company.id')
-            ->select('users.*', 'position.name as position_name', 'company.name as company_name')
+            ->select('users.*', 'company.name as company_name')
             ->paginate(30);
         return view('admin.users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 30);
@@ -40,7 +39,6 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','name')->all();
-        $position = Position::pluck('name','id')->toArray();;
         $company = Company::pluck('name','id')->all();
         $pass = uniqid();
         return view('admin.users.create',compact('roles','position','company','pass'));
@@ -60,7 +58,6 @@ class UserController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'company_id' => 'required',
-            'position_id' => 'required',
             'login' => 'required|unique:users,login',
             'roles' => 'required'
         ],
@@ -68,7 +65,6 @@ class UserController extends Controller
             'first_name.required' => 'Имя должно быть заполнено',
             'last_name.required' => 'Фамилия должна быть заполненна',
             'company_id.required' => 'Компания не выбранна',
-            'position_id.required' => 'Должность не выбранна',
             'login.required' => 'login не заполнен',
             'email.unique' => 'email существует',
             'login.unique' => 'Указанный login уже существует',
@@ -98,10 +94,9 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $position = Position::find($user->position_id);
         $company = Company::find($user->company_id);
 
-        return view('admin.users.show',compact('user', 'position', 'company'));
+        return view('admin.users.show',compact('user', 'company'));
     }
 
 
@@ -116,11 +111,10 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
-        $position = Position::pluck('name','id')->all();
         $company = Company::pluck('name','id')->all();
         $userRole = $user->roles->pluck('name','name')->all();
 
-        return view('admin.users.edit',compact('user','roles','userRole','position','company'));
+        return view('admin.users.edit',compact('user','roles','userRole','company'));
     }
 
 
@@ -143,7 +137,6 @@ class UserController extends Controller
                 'first_name.required' => 'Имя должно быть заполнено',
                 'last_name.required' => 'Фамилия должна быть заполненна',
                 'company_id.required' => 'Компания не выбранна',
-                'position_id.required' => 'Должность не выбранна',
                 'email.required' => 'email не заполнен',
                 'email.email' => 'email не соответсвует формату',
                 'email.unique' => 'Указанный Email уже существует',
@@ -218,11 +211,10 @@ class UserController extends Controller
         $userId = Auth::id();
 
         $user = User::find($userId);
-        $position = Position::pluck('name','id')->all();
         $company = Company::pluck('name','id')->all();
 
 
-        return view('user.users.edit',compact('user','position','company'));
+        return view('user.users.edit',compact('user','company'));
     }
 
     /**

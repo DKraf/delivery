@@ -59,6 +59,4 @@
         </div>
 
     </form>
-
-    <p class="text-center text-primary"><small>	&#169 2021.  ТОО "Инженер-2015"</small></p>
 @endsection

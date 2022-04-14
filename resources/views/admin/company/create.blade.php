@@ -50,7 +50,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Телефон:</strong>
-                    <input type="text" name="tel_number" class="form-control" placeholder="Номер телефона">
+                    <input type="text" name="phone" class="form-control" placeholder="Номер телефона">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -59,6 +59,4 @@
         </div>
 
     </form>
-
-    <p class="text-center text-primary"><small>	&#169 2021.  ТОО "Инженер-2015"</small></p>
 @endsection

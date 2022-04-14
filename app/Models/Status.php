@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
-class TestType extends Model
+class Status extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * @var string
      */
-    protected $table = 'test_type';
+    protected $table = 'statuses';
 
     /**
      * Атрибуты, которые можно назначать массово.
@@ -20,10 +22,7 @@ class TestType extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'questions_count',
-        'min_question_count',
-        'time_for_testing'
+        'name'
     ];
 
 
@@ -33,7 +32,7 @@ class TestType extends Model
      */
     public function search($search)
     {
-        return TestType::orderBy('id','DESC')
+        return Company::orderBy('id','DESC')
             ->where('name', 'LIKE', "%$search%")
             ->paginate(30);
     }

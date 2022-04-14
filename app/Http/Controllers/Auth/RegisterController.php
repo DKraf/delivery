@@ -50,10 +50,26 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'login' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+            'first_name' => ['required', 'string', 'min:2'],
+            'last_name' => ['required', 'string', 'min:2'],
+        ],
+            [
+                'login.required' => 'Логин не может быть пустым',
+                'login.max'      => 'Логин должен быть не более 255 символов',
+                'login.unique'   => 'Введеный логин уже зарегестрирован в системе',
+                'email.required' => 'email не может быть пустым',
+                'email.max'      => 'email должен быть не более 255 символов',
+                'email.unique'   => 'Введеный email уже зарегестрирован в системе',
+                'password.required' => 'Пароль не может быть пустым',
+                'password.min'      => 'Пароль должен содержать минимум 8 символов',
+                'first_name.required' => 'Имя не может быть пустым',
+                'first_name.min'      => 'Пароль должен содержать минимум 8 символов',
+                'last_name.required'      => 'Фамилия не может быть пустым',
+                'last_name.min'      => 'Пароль должен содержать минимум 8 символов'
+            ]);
     }
 
     /**
@@ -65,7 +81,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'patronymic' => $data['patronymic'],
+            'login' => $data['login'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

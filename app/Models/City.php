@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
-class TestTheme extends Model
+class City extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * @var string
      */
-    protected $table = "test_theme";
+    protected $table = 'cities';
 
     /**
      * Атрибуты, которые можно назначать массово.
@@ -20,6 +22,7 @@ class TestTheme extends Model
      * @var array
      */
     protected $fillable = [
+        'country_id',
         'name'
     ];
 
@@ -30,7 +33,7 @@ class TestTheme extends Model
      */
     public function search($search)
     {
-        return TestTheme::orderBy('id','DESC')
+        return Company::orderBy('id','DESC')
             ->where('name', 'LIKE', "%$search%")
             ->paginate(30);
     }
