@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomePageController;
-
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\WarehouseController;
 
 
 Route::get('/', [HomePageController::class, 'show'])->name('showindex');
@@ -38,16 +41,19 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/reset-password/{id}', [UserController::class, 'resetPassword'])->name('resetpassword');
         Route::get('/edit-index', [HomePageController::class, 'index'])->name('editindex');
         Route::post('/update-index', [HomePageController::class, 'update'])->name('updateindex');
+        Route::get('/order', [OrderController::class, 'index'])->name('user.order.index');
 
     });
 
     Route::prefix('user')->group(function () {
-        Route::get('/profile-edit', [AssigenTestController::class, 'testsHistoryShow'])->name('profileedit');
-        Route::get('/test-assign', [AssigenTestController::class, 'userTestAssign'])->name('user.testassign');
-        Route::get('/tests-history', [AssigenTestController::class, 'userTestsHistory'])->name('user.testhistory');
-        Route::get('/tests-history/{id}', [AssigenTestController::class, 'userTestsHistoryShow'])->name('user.testhistoryshow');
-        Route::get('/take-test/{id}', [AssigenTestController::class, 'takeTest'])->name('user.test.take');
-        Route::post('/test-result/{id}', [AssigenTestController::class, 'saveResult'])->name('user.test.result');
+        Route::get('/order-create', [OrderController::class, 'create'])->name('user.order.index');
+        Route::get('/order-pay', [OrderController::class, 'pay'])->name('user.order.pay');
+        Route::POST('/order-store', [OrderController::class, 'store'])->name('user.order.store');
+        Route::get('/order-new', [OrderController::class, 'news'])->name('user.orders.new');
+        Route::get('/order-show/{id}', [OrderController::class, 'show'])->name('user.order.show');
+        Route::get('/order-history', [OrderController::class, 'history'])->name('user.order.history');
+
+
         Route::get('/edit', [UserController::class, 'userEdit'])->name('user.edit');
         Route::post('/edit/{id}', [UserController::class, 'userChange'])->name('user.change');
         Route::get('/change-password', [UserController::class, 'changePassword'])->name('user.changepass');
@@ -55,6 +61,13 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     });
+
+    Route::prefix('transport')->group(function () {
+        Route::get('/warehouse-create', [WarehouseController::class, 'create'])->name('company.warehouse.create');
+        Route::POST('/warehouse-store', [WarehouseController::class, 'store'])->name('company.warehouse.store');
+        Route::get('/warehouses', [WarehouseController::class, 'index'])->name('company.warehouse.index');
+    });
+
     Route::get('/optimize', function() { $exitCode = Artisan::call('optimize');var_dump('optimized');});
 
     Route::get('/test-add/{id}', [TestController::class, 'createCustom'])->name('createCustom');
@@ -70,6 +83,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/test-assign-search/', [AssigenTestController::class, 'search'])->name('testassignsearch');
     Route::get('/test-assign-history-search/', [AssigenTestController::class, 'searchhistory'])->name('testassignhistorysearch');
 
+//AJAX
+    Route::group(['middleware' => ['auth']], function () {
+        Route::GET('/get-cities-by-country/{id}', [CityController::class, 'getCitiesByCountry']);
+        Route::GET('/get-all-addresses/{id}', [AddressController::class, 'getAllAddresses']);
+
+    });
 });
 
 

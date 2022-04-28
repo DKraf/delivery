@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class Country extends Model
+class Documents extends Model
 {
     use HasFactory, Notifiable, HasRoles;
 
     /**
      * @var string
      */
-    protected $table = 'country';
+    protected $table = 'warehouse';
 
     /**
      * Атрибуты, которые можно назначать массово.
@@ -22,23 +22,16 @@ class Country extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'order_id',
+        'to_courier_from',
+        'to_warehous_from',
+        'to_warehous_to',
+        'to_drive',
+        'to_courier_to',
+        'to_customs',
+        'to_received'
     ];
 
 
-    /**
-     * @param $search
-     * @return mixed
-     */
-    public function search($search)
-    {
-        return Country::orderBy('id','DESC')
-            ->where('name', 'LIKE', "%$search%")
-            ->paginate(30);
-    }
 
-    public function cities()
-    {
-        return $this->hasMany('App\Models\City');
-    }
 }

@@ -25,6 +25,14 @@ class Status extends Model
         'name'
     ];
 
+    /**
+     * @param $search
+     * @return mixed
+     */
+    public function getStatusByName($search)
+    {
+        return Status::where('name', "$search")->id();
+    }
 
     /**
      * @param $search
@@ -32,7 +40,7 @@ class Status extends Model
      */
     public function search($search)
     {
-        return Company::orderBy('id','DESC')
+        return Status::orderBy('id','DESC')
             ->where('name', 'LIKE', "%$search%")
             ->paginate(30);
     }

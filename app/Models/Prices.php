@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class City extends Model
+class Prices extends Model
 {
     use HasFactory, Notifiable, HasRoles;
 
     /**
      * @var string
      */
-    protected $table = 'cities';
+    protected $table = 'prices';
 
     /**
      * Атрибуты, которые можно назначать массово.
@@ -22,20 +22,20 @@ class City extends Model
      * @var array
      */
     protected $fillable = [
-        'country_id',
-        'name'
+        'company_id',
+        'kg', //цена за кг
+        'km', //Надбавка за растояние
+        'V'   //Надбавка за объём
     ];
 
     /**
-     * @param $country
-     * @return void
+     * @param $company_id
+     * @return mixed
      */
-    public function getCityByCountryId($country)
+    public function getPrice($company_id)
     {
-        return City::select('id','name')
-        ->where('country_id', $country)
-        ->orderBy('name')
-            ->get();
+        return Prices::where('company_id', $company_id)
+            ->first();
     }
     /**
      * @param $search
@@ -43,7 +43,7 @@ class City extends Model
      */
     public function search($search)
     {
-        return Company::orderBy('id','DESC')
+        return Prices::orderBy('id','DESC')
             ->where('name', 'LIKE', "%$search%")
             ->paginate(30);
     }

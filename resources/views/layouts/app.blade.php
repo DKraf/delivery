@@ -35,17 +35,24 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/users"><i class="bi bi-people"></i> Пользователи</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/roles"><i class="bi bi-person-check"></i> Роли</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/company"><i class="bi bi-building"></i> Компании</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-type"><i class="bi bi-clipboard-data"></i>История заказов</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/orders"><i class="bi bi-clipboard-data"></i>История заказов</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-theme"><i class="bi bi-patch-question"></i> В пути</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-assign"><i class="bi bi-journal-plus"></i> Ожидает томожни</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/admin/testhistory"><i class="bi bi-calendar-event"></i> Ожидает оплаты</a>
                 @endrole
-                @role('User')
+                @role('Заказчик')
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/edit"><i class="bi bi-person-circle"></i> Настройка профиля</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/test-assign"><i class="bi bi-file-earmark-check"></i> Мои тесты</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/tests-history"><i class="bi bi-file-earmark-bar-graph"></i> История тестирования</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/order-create"><i class="bi bi-file-earmark-plus"></i> Создать заявку</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/order-new"><i class="bi bi-credit-card"></i> Активные заказы</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/order-history"><i class="bi bi-archive"></i> История заказов</a>
+                @endrole
+                @role('Компания')
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/edit"><i class="bi bi-person-circle"></i> Настройка профиля</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/transport/warehouses"><i class="bi bi-person-circle"></i> Склады</a>
+
 
                 @endrole
+
             </div>
         </div>
 

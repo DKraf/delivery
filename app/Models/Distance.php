@@ -27,4 +27,18 @@ class Distance extends Model
         'distance'
     ];
 
+    public function getDistance($from, $to)
+    {
+       return Distance::select('distance')
+        ->where([
+                ['city_from', '=', $from],
+                ['city_to', '=', $to],
+            ])
+           ->orWhere([
+               ['city_from', '=', $to],
+               ['city_to', '=', $from],
+           ])
+           ->first()
+           ->toArray();
+    }
 }

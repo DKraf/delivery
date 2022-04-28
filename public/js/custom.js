@@ -220,53 +220,108 @@ $(document).ready(function () {
         return answer;
     }
 
-    var modal = document.getElementById("myModal1");
-    var img1 = document.getElementById("myImg1");
-    var modalImg = document.getElementById("img01");
-    var captionText = document.getElementById("caption");
+    $('select[name="country_id_from"]').on('change', function () {
+        $("#hiden-select-city-from").removeAttr('hidden');
+        let id = $('select[name="country_id_from"]').val();
+        $.ajax({
+            url: "/get-cities-by-country/" + id,
+            type: "GET",
+            dataType: "json",
+            success: function(msg){
+                $("#city_id_from").find('option').remove();
+                $("#city_id_from").append(`<option selected>Укажите город отправки</option>`);
+                $.each(msg, function(key, value) {
+                    $("#city_id_from").append(`<option value="${value.id}">${value.name}</option>`);
+                });
+            }
+        });
+    })
 
-    var modal1 = document.getElementById("myModal2");
-    var img2 = document.getElementById("myImg2");
-    var modalImg1 = document.getElementById("img02");
-    var captionText1 = document.getElementById("caption1");
+        $('select[name="country_id_to"]').on('change', function () {
+            $("#hiden-select-city-to").removeAttr('hidden');
+            let id = $('select[name="country_id_to"]').val();
+            $.ajax({
+                url: "/get-cities-by-country/" + id,
+                type: "GET",
+                dataType: "json",
+                success: function(msg){
+                    $("#city_id_to").find('option').remove();
+                    $("#city_id_to").append(`<option selected>Укажите город отправки</option>`);
+                    $.each(msg, function(key, value) {
+                        $("#city_id_to").append(`<option value="${value.id}">${value.name}</option>`);
+                    });
+                }
+            });
+        })
 
-    var modal2 = document.getElementById("myModal3");
-    var img3 = document.getElementById("myImg3");
-    var modalImg2 = document.getElementById("img03");
-    var captionText2 = document.getElementById("caption2");
+    $("#city_id_to").on('change', function () {
 
-    var span1 = document.getElementById("span1");
-    var span2 = document.getElementById("span2");
-    var span3 = document.getElementById("span3");
+        let city_id = $("#city_id_to").val()
+console.log(city_id)
+        if ($.isNumeric(city_id)) {
+            if (city_id == 1) {
 
-    img1.onclick = function(){
-        modal.style.display = "block";
-        modalImg.src = this.src;
-        captionText.innerHTML = this.alt;
-    }
+                $("#hiden-select-address-to").removeAttr('hidden');
+                $("#hiden-input-address-to").attr('hidden', true);
 
-    img2.onclick = function(){
-        modal1.style.display = "block";
-        modalImg1.src = this.src;
-        captionText1.innerHTML = this.alt;
-    }
+                $.ajax({
+                    url: "/get-all-addresses/" + city_id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(msg){
+                        $("#select-address-to").find('option').remove();
+                        $("#select-address-to").append(`<option selected>Выберите из списка удобный для вас пункт</option>`);
+                        $.each(msg, function(key, value) {
+                            $("#select-address-to").append(`<option value="${value.id}">${value.address}, ${value.type}:"${value.name}"</option>`);
+                        });
+                    }
+                });
+            } else {
+                $("#hiden-input-address-to").removeAttr('hidden');
+                $("#hiden-select-address-to").attr('hidden', true);
+            }
+        }
+    })
 
-    img3.onclick = function(){
-        modal2.style.display = "block";
-        modalImg2.src = this.src;
-        captionText2.innerHTML = this.alt;
-    }
+    $("#city_id_from").on('change', function () {
+        let city_id = $("#city_id_from").val();
+        if ($.isNumeric(city_id)) {
+            if (city_id == 1) {
+                $("#hiden-input-address-from").attr('hidden', 'true');
+                $("#hiden-select-address-from").removeAttr('hidden');
+                $.ajax({
+                    url: "/get-all-addresses/" + city_id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(msg){
+                        $("#select-address-from").find('option').remove();
+                        $("#select-address-from").append(`<option selected>Выберите адрес</option>`);
+                        $.each(msg, function(key, value) {
+                            $("#select-address-from").append(`<option value="${value.id}">${value.address}, ${value.type}:"${value.name}"</option>`);
+                        });
+                    }
+                });
+            } else {
+                $("#hiden-input-address-from").removeAttr('hidden');
+                $("#hiden-select-address-from").attr('hidden', 'true');
+            }
+        }
+    })
 
-    span1.onclick = function() {
-        modal.style.display = "none";
-    }
+    $('input[name="S"]').blur(function(){getValue()})
+    $('input[name="H"]').blur(function(){getValue()})
+    $('input[name="L"]').blur(function(){getValue()})
 
-    span2.onclick = function() {
-        modal1.style.display = "none";
-    }
-
-    span3.onclick = function() {
-
-        modal2.style.display = "none";
+    function getValue()
+    {
+        let S =  $('input[name="S"]').val()
+        let H =  $('input[name="H"]').val()
+        let L =  $('input[name="L"]').val()
+console.log(S)
+        if ( S != '' && L != '' && H != ''){
+            $('input[name="V"]').val(S * H * L)
+        }
     }
 })
+
+

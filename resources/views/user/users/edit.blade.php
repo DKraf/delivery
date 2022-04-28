@@ -66,17 +66,9 @@
                 {!! Form::select('company_id', $company,null, array('class' => 'form-control','placeholder' => 'Выберите компанию')) !!}
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Должность:</strong>
-                {!! Form::select('position_id', $position, null, array('class' => 'form-control', 'placeholder' => 'Выберите должность')) !!}
-            </div>
-        </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </div>
     </div>
     {!! Form::close() !!}
-
-    <p class="text-center text-primary"><small>	&#169 2021.  ТОО "Инженер-2015"</small></p>
 @endsection

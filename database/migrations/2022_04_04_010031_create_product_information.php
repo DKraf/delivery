@@ -15,6 +15,13 @@ class CreateProductInformation extends Migration
     {
         Schema::create('product_information', function (Blueprint $table) {
             $table->id();
+            $table->user_id()->nullable();
+            $table->string('name')->nullable();
+            $table->integer('kg')->nullable(); //Вес
+            $table->integer('H')->nullable(); //Длина
+            $table->integer('L')->nullable(); //Высота
+            $table->integer('S')->nullable(); //Глубина
+            $table->integer('V')->nullable();
             $table->timestamps();
         });
     }

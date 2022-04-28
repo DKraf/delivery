@@ -41,7 +41,7 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $company = Company::pluck('name','id')->all();
         $pass = uniqid();
-        return view('admin.users.create',compact('roles','position','company','pass'));
+        return view('admin.users.create',compact('roles','company','pass'));
     }
 
 
@@ -154,14 +154,6 @@ class UserController extends Controller
             $input = Arr::except($input,array('password'));
         }
 
-        if (isset($input['email'])) {
-            $flag = User::where('email', $input['email'])->get()->toArray();
-            if (sizeof($flag)) {
-                return redirect()->route('users.index')
-                    ->with('warning', 'Ошибка редактирования пользователя, пользователь с таким email существует');
-            }
-        }
-
         $user = User::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
@@ -244,13 +236,6 @@ class UserController extends Controller
 
         $input = $request->all();
 
-        if (isset($input['email'])) {
-            $flag = User::where('email', $input['email'])->get()->toArray();
-            if (sizeof($flag)) {
-                return redirect()->route('user.edit')
-                    ->with('warning', 'Ошибка редактирования профиля, пользователь с таким email существует');
-            }
-        }
 
         $user = User::find($id);
         $user->update($input);
