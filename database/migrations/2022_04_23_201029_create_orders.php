@@ -27,6 +27,7 @@ class CreateOrders extends Migration
             $table->integer('status_id')->nullable();
             $table->integer('price')->nullable();
             $table->boolean('is_active')->nullable();
+            $table->boolean('is_custom')->nullable();
             $table->timestamps();
         });
     }

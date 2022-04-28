@@ -48,11 +48,19 @@
                 @endrole
                 @role('Компания')
                 <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/edit"><i class="bi bi-person-circle"></i> Настройка профиля</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/transport/warehouses"><i class="bi bi-person-circle"></i> Склады</a>
-
-
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/transport/warehouses"><i class="bi bi-building"></i> Склады</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/price/show"><i class="bi bi-tag"></i> Прайсы</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/transport/order"><i class="bi bi-credit-card"></i> Активные заказы</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/transport/order-history"><i class="bi bi-archive"></i> История заказов</a>
                 @endrole
-
+                @role('Курьер')
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/edit"><i class="bi bi-person-circle"></i> Настройка профиля</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/order-new"><i class="bi bi-credit-card"></i> Активные заказы</a>
+                @endrole
+                @role('Таможня')
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/edit"><i class="bi bi-person-circle"></i> Настройка профиля</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/order-custom"><i class="bi bi-bank"></i>Требуется таможня</a>
+                @endrole
             </div>
         </div>
 

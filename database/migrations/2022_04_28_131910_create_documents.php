@@ -23,6 +23,8 @@ class CreateDocuments extends Migration
             $table->string('to_courier_to')->nullable();
             $table->string('to_customs')->nullable();
             $table->string('to_received')->nullable();
+            $table->string('score')->nullable();
+            $table->string('payment')->nullable();
             $table->timestamps();
         });
     }

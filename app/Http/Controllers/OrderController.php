@@ -5,36 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Service\OrderService;
 use App\Http\Service\ProductInformationService;
 use App\Models\Address;
-use App\Models\City;
 use App\Models\Country;
 use App\Models\documents;
+use App\Models\OrderHistory;
 use App\Models\Orders;
-use App\Models\ProductInformation;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use DB;
 
 class OrderController extends Controller
 {
-    /**
-     * Отобразить список ресурсов.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function __construct()
-    {
-//        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-//        $this->middleware('permission:role-create', ['only' => ['create','store']]);
-//        $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-//        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    }
 
 
     /**
-     * Отобразить список ресурсов.
+     * Отобразить список ресурсов. Для Заказчика
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,7 +32,20 @@ class OrderController extends Controller
     }
 
     /**
-     * Отобразить список ресурсов.
+     * Отобразить список ресурсов. Для компании
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function transportNews(Request $request)
+    {
+        $data = Orders::oderCompany();
+
+        return view('user.order.index',compact('data'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
+
+    /**
+     * Отобразить список ресурсов.Для Заказчика
      *
      * @return \Illuminate\Http\Response
      */
@@ -58,6 +56,20 @@ class OrderController extends Controller
         return view('user.order.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
+
+    /**
+     * Отобразить список ресурсов.Для Компании
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function transportHistory(Request $request)
+    {
+        $data = Orders::oderCompany(0);
+
+        return view('user.order.index',compact('data'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
+
 
     /**
      * Отобразить форму для создания нового ресурса.
@@ -112,6 +124,7 @@ class OrderController extends Controller
         $data['company_id'] = 1;
         $data['is_active'] = true;
         $data['status_id'] = 9;
+        $data['is_custom'] = ($data['country_id_from'] != $data['country_id_to']);
 
         //расчет стоймости
         $orderService = new OrderService();
@@ -142,9 +155,10 @@ class OrderController extends Controller
         $data['product_id'] = $productInformation->create($data);
 
 
-       $order_id =  Orders::create($data)->id;
+        $data['order_id'] =  Orders::create($data)->id;
 
-        Documents::create(['order_id' => $order_id]);
+        Documents::create(['order_id' => $data['order_id']]);
+        OrderHistory::create($data);
 
         return redirect()->route('user.orders.new')
             ->with('success','Заявка создана!');
@@ -154,15 +168,15 @@ class OrderController extends Controller
     /**
      * Отобразить указанный ресурс.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
      */
-    public function show($id): \Illuminate\Http\Response
+    public function show(int $id)
     {
 
-        $data = $data = Orders::showOrder($id);
-dd($data);
-        return view('user.order.show',compact('data'));
+        $data =  Orders::showOrder($id);
+        $history = OrderHistory::getOrderHistory($id);
+
+        return view('user.order.show',compact('data', 'history'));
     }
 
 
@@ -190,6 +204,50 @@ dd($data);
             ->with('success','Роль успешно обновлена');
     }
 
+    /**
+     * Подтверждение
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function approve(Request $request, $id)
+    {
+        dd($request->file());
+        if ($request->has('score')) {
+            $file = $request->file('score');
+            $image1 = $this->uploadFile($file, $file->getClientOriginalName());
+        }
+        if ($request->has('image2')) {
+            $file = $request->file('image2');
+            $image2 = $this->uploadFile($file, $file->getClientOriginalName());
+        }
+        if ($request->has('image3')) {
+            $file = $request->file('image3');
+            $image3 = $this->uploadFile($file, $file->getClientOriginalName());
+        }
+
+        $request = $request->all();
+        $request['image1'] = $image1 ?? null;
+        $request['image2'] = $image2 ?? null;
+        $request['image3'] = $image3 ?? null;
+
+        $save_data = array_filter($request);
+
+        $order_to_update = Orders::find($id);
+
+        $order_to_update->update(($save_data));
+        dd('asd');
+    }
+
+    private function uploadFile($file, $name_it): string
+    {
+        $name = $name_it;
+        $extension = $file->getClientOriginalExtension();
+        $filename = $name . '.' . $extension;
+        $file->storeAs('public', $filename);
+        return $filename;
+    }
 
     /**
      * Убрать указанный ресурс из хранилища.

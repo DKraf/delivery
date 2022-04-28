@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Новые заявки:</h2>
+                <h2>Заявки:</h2>
             </div>
         </div>
     </div>

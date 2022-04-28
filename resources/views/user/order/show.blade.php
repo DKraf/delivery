@@ -1,53 +1,172 @@
 @extends('layouts.app')
 @section('content')
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @elseif($message = Session::get('warning'))
-        <div class="alert alert-warning">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Новые заявки:</h2>
+                <h2>Информация о заказе №  {{ $data->number }}</h2>
             </div>
         </div>
     </div>
-    @if (sizeof($data) > 0)
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Наименование груза:</strong>
+                {{ $data->product }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Высота груза:</strong>
+                {{ $data->H }}м
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Ширина груза:</strong>
+                {{ $data->S }}м
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Длина груза:</strong>
+                {{ $data->L }}м
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Объем груза (куб.м):</strong>
+                {{ $data->V }} м.куб.
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Полный Адрес Отправки:</strong>
+                {{ $data->country_from }},  {{ $data->city_from }},  {{ $data->address_from }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Полный Адрес Получения:</strong>
+                {{ $data->country_to }},  {{ $data->city_to }},  {{ $data->address_to }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Данные грузополучателя:</strong>
+                {{ $data->first_name }} {{ $data->last_name }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Email</strong>
+                {{ $data->email }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Статус:</strong>
+                {{ $data->status }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Сумма:</strong>
+                {{ $data->price }} тг.
+            </div>
+        </div>
+    </div>
+
+
+{{--ДОКУМЕНТЫ ЗАЯВКИ--}}
+   <div class="row">
+    <div class="col-lg-12 margin-tb">
+        <div class="pull-left">
+            <h2>Документы</h2>
+        </div>
+    </div>
+    </div>
         <div class="table-responsive">
         <table class="table table-bordered table-striped">
            <tr>
-               <th>№</th>
-               <th>Груз</th>
-               <th>Город отправки</th>
-               <th>Город доставки</th>
-               <th>ТК</th>
-               <th>Цена</th>
-               <th>Статус</th>
+               <th>Счет</th>
+               <th>Оплата</th>
+               <th>Накладная курьеру</th>
+               <th>Накладная склада отпраки</th>
+               <th>Накладная склада приема</th>
+               <th>Накладная склада доставки</th>
+               <th>Накладная ТТ</th>
+               <th>Таможенная деклорация</th>
+               <th>Накладная о выдаче</th>
            </tr>
-           @foreach ($data as $order)
                <tr>
-                   <td>{{ ++$i }}</td>
-                   <td>{{ $order->product }} </td>
-                   <td>{{ $order->city_from }} </td>
-                   <td>{{ $order->city_to }} </td>
-                   <td>{{ $order->company }}</td>
-                   <td>{{ $order->price }} </td>
-                   <td>{{ $order->status }} </td>
-                   <td>
-                       <a class="btn btn-success" href="{{ route('user.order.show',$order->id) }}">
-                           <i class="bi bi-play-btn"></i>
-                       </a>
-                   </td>
+                   <th>@if ($data->score) {{$data->score}} @else - @endif</th>
+                   <th>@if ($data->payment) {{$data->payment}} @else - @endif</th>
+                   <th>@if ($data->to_courier_from) {{$data->to_courier_from}} @else - @endif</th>
+                   <th>@if ($data->to_warehous_from) {{$data->to_warehous_from}} @else - @endif</th>
+                   <th>@if ($data->to_warehous_to) {{$data->to_warehous_to}} @else - @endif</th>
+                   <th>@if ($data->to_drive) {{$data->to_drive}} @else - @endif</th>
+                   <th>@if ($data->to_courier_to) {{$data->to_courier_to}} @else - @endif</th>
+                   <th>@if ($data->to_customs) {{$data->to_customs}} @else - @endif</th>
+                   <th>@if ($data->to_received) {{$data->to_received}} @else - @endif</th>
                </tr>
-           @endforeach
         </table>
         </div>
-    @else
-        <p class="text-center text-danger">Пока нет ни одного заказа</p>
+    {{--    ФУНКЦИОНАЛ ПО РОЛЯМ--}}
+    {{--    {{-КОМПАНИ-}}--}}
+    @role('Компания')
+    @if ($data->status_id == 9)
+        <form action="{{ route('approvescore', $data->number)}}" method="POST">
+            @csrf
+            <div class="row">
+                <input type="text" name="status_id" value="1" class="form-control" hidden="true">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong style="color:red">Для подтверждения нужно прикрепить Счет на оплату</strong>
+                        <input type="file" name="score" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary">Подтвердить</button>
+                </div>
+            </div>
+        </form>
     @endif
-       {!! $data->links() !!}
+        @endrole
+    {{--    {{-Пользователь-}}--}}
+    @role('Заказчик')
+    @endrole
+
+    {{--    {{-Пользователь-}}--}}
+    @role('Курьер')
+    @endrole
+    {{--    {{-Таможня-}}--}}
+    @role('Таможня')
+    @endrole
+
+
+    {{--    ИСТОРИЯ ЗАЯВКИ--}}
+    @if (sizeof($history) > 0)
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>История Заказа</h2>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>Статус</th>
+                <th>Дата</th>
+            </tr>
+            @foreach ($history as $hi)
+            <tr>
+                <th>{{$hi->status}}</th>
+                <th>{{$hi->created_at}}</th>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+    @endif
  @endsection

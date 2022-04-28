@@ -35,7 +35,8 @@ class Orders extends Model
         'address_id_to',
         'status_id',
         'price',
-        'is_active'
+        'is_active',
+        'is_custom'
     ];
 
     /**
@@ -81,6 +82,30 @@ class Orders extends Model
             ->paginate(5);
     }
 
+    public function oderCompany($status = 1)
+    {
+        return  Orders::orderBy('updated_at','DESC')
+            ->leftJoin('product_information', 'orders.product_id', '=', 'product_information.id')
+            ->leftJoin('company', 'orders.company_id', '=', 'company.id')
+            ->leftJoin('cities as cto', 'orders.city_id_to', '=', 'cto.id')
+            ->leftJoin('cities as cfrom' , 'orders.city_id_from', '=', 'cfrom.id')
+            ->leftJoin('statuses' , 'orders.status_id', '=', 'statuses.id')
+
+            ->select
+            (
+                'orders.*',
+                'product_information.name as product',
+                'cto.name as city_to',
+                'cfrom.name as city_from',
+                'company.name as company',
+                'statuses.name as status'
+            )
+            ->where('orders.company_id' , Auth::user()->company_id)
+            ->where('orders.is_active' , $status)
+
+            ->paginate(5);
+    }
+
     public function showOrder($id)
     {
         return Orders::find($id)
@@ -97,9 +122,14 @@ class Orders extends Model
 
             ->leftJoin('statuses' , 'orders.status_id', '=', 'statuses.id')
             ->leftJoin('documents', 'orders.id', '=' , 'documents.order_id')
+            ->leftJoin('users', 'orders.user_id', '=' , 'users.id')
+
             ->select
             (
                 'orders.price',
+                'orders.id as number',
+                'orders.status_id as status_id',
+
                 'documents.*',
 
                 'product_information.name as product',
@@ -113,15 +143,20 @@ class Orders extends Model
                 'afrom.address as address_from',
 
                 'coto.name as country_to',
-                'coto.name as country_from',
+                'cofrom.name as country_from',
 
                 'cto.name as city_to',
                 'cfrom.name as city_from',
 
                 'company.name as company',
-                'statuses.name as status'
+                'statuses.name as status',
+
+                'users.first_name as first_name',
+                'users.last_name as last_name',
+                'users.email as email',
+
             )
             ->where('orders.id', $id)
-            ->get();
+            ->first();
     }
 }

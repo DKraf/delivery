@@ -75,12 +75,12 @@ class HomePageController extends Controller
         return view('welcome.index', compact('data'));
     }
 
-    private function uploadImage($img_obj, $name_it)
+    private function uploadImage($file, $name_it)
     {
         $name = $name_it;
-        $extension = $img_obj->getClientOriginalExtension();
+        $extension = $file->getClientOriginalExtension();
         $filename = $name . '.' . $extension;
-        $img_obj->storeAs('public', $filename);
+        $file->storeAs('public', $filename);
         return $filename;
     }
 
