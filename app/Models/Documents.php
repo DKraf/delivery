@@ -14,7 +14,7 @@ class Documents extends Model
     /**
      * @var string
      */
-    protected $table = 'warehouse';
+    protected $table = 'documents';
 
     /**
      * Атрибуты, которые можно назначать массово.
@@ -29,7 +29,9 @@ class Documents extends Model
         'to_drive',
         'to_courier_to',
         'to_customs',
-        'to_received'
+        'to_received',
+        'score',
+        'payment'
     ];
 
 

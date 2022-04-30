@@ -41,7 +41,6 @@
         </a>
     @else
         <p class="text-center text-danger">Пока нет ни одного Склада!</p>
-
     @endif
        {!! $data->links() !!}
  @endsection

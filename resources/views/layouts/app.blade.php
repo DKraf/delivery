@@ -35,10 +35,8 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/users"><i class="bi bi-people"></i> Пользователи</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/roles"><i class="bi bi-person-check"></i> Роли</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/company"><i class="bi bi-building"></i> Компании</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/orders"><i class="bi bi-clipboard-data"></i>История заказов</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-theme"><i class="bi bi-patch-question"></i> В пути</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/test-assign"><i class="bi bi-journal-plus"></i> Ожидает томожни</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/admin/testhistory"><i class="bi bi-calendar-event"></i> Ожидает оплаты</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/admin/orders"><i class="bi bi-clipboard-data"></i>Заказы</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/admin/order-history"><i class="bi bi-patch-question"></i>История заказов</a>
                 @endrole
                 @role('Заказчик')
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/edit"><i class="bi bi-person-circle"></i> Настройка профиля</a>

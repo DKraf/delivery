@@ -12,6 +12,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\FileController;
 
 
 Route::get('/', [HomePageController::class, 'show'])->name('showindex');
@@ -29,7 +30,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('admin')->group(function () {
         Route::get('/reset-password/{id}', [UserController::class, 'resetPassword'])->name('resetpassword');
-        Route::get('/order', [OrderController::class, 'index'])->name('user.order.index');
+        Route::get('/orders', [OrderController::class, 'index'])->name('user.order.index');
+        Route::get('/order-history', [OrderController::class, 'indexHistory'])->name('user.order.history');
+
     });
 
     //Юзерские
@@ -59,6 +62,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/order-history', [OrderController::class, 'transportHistory'])->name('transport.order.history');
     });
 
+    Route::prefix('custom')->group(function () {
+        Route::get('/order', [OrderController::class, 'customNews'])->name('custom.orders.new');
+    });
+
+    Route::prefix('courier')->group(function () {
+        Route::get('/order', [OrderController::class, 'courierNews'])->name('courier.orders.new');
+    });
+
     //Прайсы
     Route::prefix('price')->group(function () {
         Route::get('/add', [PriceController::class, 'create'])->name('company.price.create');
@@ -75,10 +86,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::POST('/warehous-from/{id}', [OrderController::class, 'approve'])->name('approvewarehousfrom');
         Route::POST('/warehous-to/{id}', [OrderController::class, 'approve'])->name('approvewarehousto');
         Route::POST('/drive/{id}', [OrderController::class, 'approve'])->name('approvetodrive');
-        Route::POST('/courier-to/{id}', [OrderController::class, 'approve'])->name('approvecourier_to');
+        Route::POST('/courier-to/{id}', [OrderController::class, 'approve'])->name('approvecourierto');
         Route::POST('/customs/{id}', [OrderController::class, 'approve'])->name('approvecustoms');
         Route::POST('/received/{id}', [OrderController::class, 'approve'])->name('approvereceived');
     });
+
+    Route::get('/file-download/{name}', [FileController::class, 'download'])->name('file.download');
 
     //Searches
     Route::get('/users-search/', [UserController::class, 'search'])->name('usersearch');

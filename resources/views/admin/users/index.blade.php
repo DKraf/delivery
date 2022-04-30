@@ -48,7 +48,6 @@
             <th>Login</th>
             <th>Email</th>
             <th>Компания</th>
-            <th>Должность</th>
             <th width="280px">Действие</th>
         </tr>
         @foreach ($data as $key => $user)
@@ -58,7 +57,6 @@
                 <td>{{ $user->login}}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->company_name }}</td>
-                <td>{{ $user->position_name  }}</td>
                 <td>
                     <form action="{{ route('users.destroy',$user->id) }}" method="POST">
                         <a class="btn btn-info btn-sm" href="{{ route('users.show',$user->id) }}">

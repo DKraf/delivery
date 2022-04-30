@@ -81,6 +81,27 @@ class Orders extends Model
 
             ->paginate(5);
     }
+    public function oderAdmin($status = 1)
+    {
+        return  Orders::orderBy('updated_at','DESC')
+            ->leftJoin('product_information', 'orders.product_id', '=', 'product_information.id')
+            ->leftJoin('company', 'orders.company_id', '=', 'company.id')
+            ->leftJoin('cities as cto', 'orders.city_id_to', '=', 'cto.id')
+            ->leftJoin('cities as cfrom' , 'orders.city_id_from', '=', 'cfrom.id')
+            ->leftJoin('statuses' , 'orders.status_id', '=', 'statuses.id')
+
+            ->select
+            (
+                'orders.*',
+                'product_information.name as product',
+                'cto.name as city_to',
+                'cfrom.name as city_from',
+                'company.name as company',
+                'statuses.name as status'
+            )
+            ->where('orders.is_active' , $status)
+            ->paginate(5);
+    }
 
     public function oderCompany($status = 1)
     {
@@ -106,6 +127,54 @@ class Orders extends Model
             ->paginate(5);
     }
 
+    public function oderCustom($status = 1)
+    {
+        return  Orders::orderBy('updated_at','DESC')
+            ->leftJoin('product_information', 'orders.product_id', '=', 'product_information.id')
+            ->leftJoin('company', 'orders.company_id', '=', 'company.id')
+            ->leftJoin('cities as cto', 'orders.city_id_to', '=', 'cto.id')
+            ->leftJoin('cities as cfrom' , 'orders.city_id_from', '=', 'cfrom.id')
+            ->leftJoin('statuses' , 'orders.status_id', '=', 'statuses.id')
+
+            ->select
+            (
+                'orders.*',
+                'product_information.name as product',
+                'cto.name as city_to',
+                'cfrom.name as city_from',
+                'company.name as company',
+                'statuses.name as status'
+            )
+            ->where('status_id', '=', 6)
+            ->where('orders.is_active' , $status)
+            ->paginate(5);
+    }
+    public function oderCurier($status = 1)
+    {
+        return  Orders::orderBy('updated_at','DESC')
+            ->leftJoin('product_information', 'orders.product_id', '=', 'product_information.id')
+            ->leftJoin('company', 'orders.company_id', '=', 'company.id')
+            ->leftJoin('cities as cto', 'orders.city_id_to', '=', 'cto.id')
+            ->leftJoin('cities as cfrom' , 'orders.city_id_from', '=', 'cfrom.id')
+            ->leftJoin('statuses' , 'orders.status_id', '=', 'statuses.id')
+
+            ->select
+            (
+                'orders.*',
+                'product_information.name as product',
+                'cto.name as city_to',
+                'cfrom.name as city_from',
+                'company.name as company',
+                'statuses.name as status'
+            )
+            ->where('orders.company_id' , Auth::user()->company_id)
+            ->where(function ($query) {
+                $query->where('status_id', '=', 1)
+                    ->orWhere('status_id', '=', 12);
+            })
+            ->where('orders.is_active' , $status)
+            ->paginate(5);
+    }
     public function showOrder($id)
     {
         return Orders::find($id)

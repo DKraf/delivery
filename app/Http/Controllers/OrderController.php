@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\FileController;
 use App\Http\Service\OrderService;
 use App\Http\Service\ProductInformationService;
 use App\Models\Address;
@@ -32,6 +33,32 @@ class OrderController extends Controller
     }
 
     /**
+     * Отобразить список ресурсов. Для Админа
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $data = Orders::oderAdmin();
+
+        return view('user.order.index',compact('data'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
+
+    /**
+     * Отобразить список ресурсов. Для Админа
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexHistory(Request $request)
+    {
+        $data = Orders::oderAdmin(0);
+
+        return view('user.order.index',compact('data'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
+
+    /**
      * Отобразить список ресурсов. Для компании
      *
      * @return \Illuminate\Http\Response
@@ -44,6 +71,31 @@ class OrderController extends Controller
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
+    /**
+     * Отобразить список ресурсов. Для таможни
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function customNews(Request $request)
+    {
+        $data = Orders::oderCustom();
+
+        return view('user.order.index',compact('data'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
+
+    /**
+     * Отобразить список ресурсов. Для таможни
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function curierNews(Request $request)
+    {
+        $data = Orders::oderCurier();
+
+        return view('user.order.index',compact('data'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
     /**
      * Отобразить список ресурсов.Для Заказчика
      *
@@ -208,45 +260,25 @@ class OrderController extends Controller
      * Подтверждение
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function approve(Request $request, $id)
+    public function approve(Request $request, int $id)
     {
-        dd($request->file());
-        if ($request->has('score')) {
-            $file = $request->file('score');
-            $image1 = $this->uploadFile($file, $file->getClientOriginalName());
-        }
-        if ($request->has('image2')) {
-            $file = $request->file('image2');
-            $image2 = $this->uploadFile($file, $file->getClientOriginalName());
-        }
-        if ($request->has('image3')) {
-            $file = $request->file('image3');
-            $image3 = $this->uploadFile($file, $file->getClientOriginalName());
-        }
-
-        $request = $request->all();
-        $request['image1'] = $image1 ?? null;
-        $request['image2'] = $image2 ?? null;
-        $request['image3'] = $image3 ?? null;
-
-        $save_data = array_filter($request);
+        $fileController = new FileController();
+        $save_data = $fileController->upload($request);
+        $save_data['order_id'] = $id;
 
         $order_to_update = Orders::find($id);
+        $doc_to_update = Documents::where('order_id', $id)->first();
 
+        $doc_to_update->update(($save_data));
         $order_to_update->update(($save_data));
-        dd('asd');
-    }
 
-    private function uploadFile($file, $name_it): string
-    {
-        $name = $name_it;
-        $extension = $file->getClientOriginalExtension();
-        $filename = $name . '.' . $extension;
-        $file->storeAs('public', $filename);
-        return $filename;
+        OrderHistory::create($save_data);
+
+        return redirect()->back()
+            ->with('Success', 'Файл успешно загружен!');
     }
 
     /**
