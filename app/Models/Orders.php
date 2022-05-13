@@ -196,6 +196,8 @@ class Orders extends Model
             ->select
             (
                 'orders.price',
+                'orders.city_id_to',
+                'orders.address_id_to',
                 'orders.id as number',
                 'orders.status_id as status_id',
 

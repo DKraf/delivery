@@ -53,14 +53,15 @@ class PriceController extends Controller
     }
 
 public function index(Request $request){
+
     $data = Prices::orderBy('id','DESC')
+        ->where('company_id', Auth::user()->company_id)
         ->paginate(30);
+
     return view('company.price.index',compact('data'))
         ->with('i', ($request->input('page', 1) - 1) * 30);
 
 }
-
-
 
     /**
      * Убрать указанный ресурс из хранилища.

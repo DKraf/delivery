@@ -53,11 +53,11 @@
                 @endrole
                 @role('Курьер')
                 <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/edit"><i class="bi bi-person-circle"></i> Настройка профиля</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/order-new"><i class="bi bi-credit-card"></i> Активные заказы</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/courier/order"><i class="bi bi-credit-card"></i> Активные заказы</a>
                 @endrole
                 @role('Таможня')
                 <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/edit"><i class="bi bi-person-circle"></i> Настройка профиля</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/user/order-custom"><i class="bi bi-bank"></i>Требуется таможня</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3 " href="/custom/order"><i class="bi bi-bank"></i>Требуется таможня</a>
                 @endrole
             </div>
         </div>

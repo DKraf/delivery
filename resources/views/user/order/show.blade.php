@@ -4,6 +4,14 @@
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h2>Информация о заказе №  {{ $data->number }}</h2>
+                @if($data->city_id_to == 1 && $data->address_id_to < 763)
+                <h6>Загрузить маршрут от склада до ТТ
+                    <a class="btn btn-warning"
+                       href="https://2gis.kz/almaty" target="_blank">
+                        <i class="bi bi-signpost-2"></i>
+                    </a>
+                </h6>
+                    @endif
             </div>
         </div>
     </div>
@@ -211,7 +219,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong style="color:red">Для подтверждения нужно прикрепить Счет на оплату</strong>
-                        <input type="file" name="score" class="form-control" required >
+                        <input type="file" name="score" class="form-control"  accept="image/png, image/gif, image/jpeg" required >
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -227,7 +235,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong style="color:red">Курьер привез товар на отправку! Прикрепите копию акта получения груза!</strong>
-                        <input type="file" name="to_warehous_from" class="form-control" required >
+                        <input type="file" name="to_warehous_from" class="form-control"  accept="image/png, image/gif, image/jpeg" required >
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -243,7 +251,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong style="color:red">Товар Загружен, отправлен на склад города выдачи</strong>
-                        <input type="file" name="to_drive" class="form-control" required >
+                        <input type="file" name="to_drive" class="form-control"  accept="image/png, image/gif, image/jpeg" required >
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -259,7 +267,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong style="color:red">Товар Доставлен на склад города выдачи! прикрепите накладную!</strong>
-                        <input type="file" name="to_warehous_to" class="form-control" required >
+                        <input type="file" name="to_warehous_to" class="form-control"  accept="image/png, image/gif, image/jpeg" required >
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -279,7 +287,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong style="color:red">Подтвердите оплату , прикрепив документ оплаты</strong>
-                        <input type="file" name="payment" class="form-control" required >
+                        <input type="file" name="payment" class="form-control"  accept="image/png, image/gif, image/jpeg" required >
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -295,7 +303,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong style="color:red">Прикрепите копию акта получения груза!</strong>
-                        <input type="file" name="to_received" class="form-control" required >
+                        <input type="file" name="to_received" class="form-control"  accept="image/png, image/gif, image/jpeg" required >
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -316,7 +324,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong style="color:red">Подтвердите что вы забрали груз и везете его на Склад, прикрипите акт приема!</strong>
-                        <input type="file" name="to_courier_from" class="form-control" required >
+                        <input type="file" name="to_courier_from" class="form-control"  accept="image/png, image/gif, image/jpeg" required >
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -332,7 +340,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong style="color:red">Подтвердите что вы забрали груз и везете его на пункт выдачи, прикрипите акт приема!</strong>
-                        <input type="file" name="to_courier_to" class="form-control" required >
+                        <input type="file" name="to_courier_to" class="form-control"  accept="image/png, image/gif, image/jpeg" required >
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -352,7 +360,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong style="color:red">Подтвердите растоможку товара, прикрепив томоженную декларацию</strong>
-                        <input type="file" name="to_customs" class="form-control" required >
+                        <input type="file" name="to_customs" class="form-control" accept="image/png, image/gif, image/jpeg" required >
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">

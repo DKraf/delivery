@@ -3,6 +3,7 @@
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TrackerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/order-new', [OrderController::class, 'news'])->name('user.orders.new');
         Route::get('/order-show/{id}', [OrderController::class, 'show'])->name('user.order.show');
         Route::get('/order-history', [OrderController::class, 'history'])->name('user.order.history');
+        Route::post('/order-apply/{id}', [OrderController::class, 'apply'])->name('user.order.apply');
 
 
         Route::get('/edit', [UserController::class, 'userEdit'])->name('user.edit');
@@ -105,6 +107,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
+    Route::get('/tracker/{id}', [TrackerController::class, 'getForMyOrder'])->name('get.tracker');
 
 
     //Оптимизация сервера на бою

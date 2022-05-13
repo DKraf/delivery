@@ -5,6 +5,9 @@
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h2>Склады:</h2>
+                <a class="btn btn-success" href="{{ route('company.warehouse.create') }}">
+                    <i class="bi bi-plus"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -36,9 +39,6 @@
            @endforeach
         </table>
         </div>
-        <a class="btn btn-success" href="{{ route('company.warehouse.create') }}">
-            <i class="bi bi-plus"></i>
-        </a>
     @else
         <p class="text-center text-danger">Пока нет ни одного Склада!</p>
     @endif

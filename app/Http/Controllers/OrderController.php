@@ -18,7 +18,17 @@ use DB;
 class OrderController extends Controller
 {
 
+public function apply(Request $request, $id)
+{
+    $role = Orders::find($id);
+    $role->price = $request->input('price');
+    $role->status_id = 9;
+    $role->company_id = $request->input('company_id');
+    $role->save();
 
+    return redirect()->route('user.orders.new')
+        ->with('success','Компания выбрана! Ждите счет на оплату!');
+}
     /**
      * Отобразить список ресурсов. Для Заказчика
      *
@@ -89,7 +99,7 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function curierNews(Request $request)
+    public function courierNews(Request $request)
     {
         $data = Orders::oderCurier();
 
@@ -173,19 +183,17 @@ class OrderController extends Controller
         //Проверяем Адрес отправки если не в Алматы то дописываем новый и получаем айди привязав к городу
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
-        $data['company_id'] = 1;
         $data['is_active'] = true;
-        $data['status_id'] = 9;
+        $data['status_id'] = 13;
         $data['is_custom'] = ($data['country_id_from'] != $data['country_id_to']);
 
         //расчет стоймости
         $orderService = new OrderService();
-        if (!$price = $orderService->makeСalculation($data)) {
+        if (!$prices = $orderService->makeСalculation($data)) {
             return redirect()->back()
                 ->with('warning', 'К сожелению в этих городах нет представительства');
         };
 
-        $data['price'] = $price;
 
         if ($data['address_name_from']) {
             $data['address_id_from'] = Address::create([
@@ -212,8 +220,12 @@ class OrderController extends Controller
         Documents::create(['order_id' => $data['order_id']]);
         OrderHistory::create($data);
 
-        return redirect()->route('user.orders.new')
-            ->with('success','Заявка создана!');
+        $order = Orders::showOrder($data['order_id']);
+
+        return view('user.order.indexCash',compact('order', 'prices'))
+            ->with('success','Заявка создана')
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+
     }
 
 

@@ -29,10 +29,11 @@ class Warehouse extends Model
         'country_id'
     ];
 
-   public function checkCity($id)
+   public function checkCity($id, $company_id)
    {
        return Warehouse::select('id')
            ->where('city_id', $id)
+           ->where('company_id', $company_id)
            ->get()->toArray();
    }
     /**
